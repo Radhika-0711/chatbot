@@ -1,10 +1,11 @@
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 from openai import OpenAI
+import os
 
 app = Flask(__name__)
 
-client = OpenAI(api_key="YOUR_API_KEY")
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 chat_history = []
 
@@ -36,4 +37,4 @@ def home():
     return "Bot Running"
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
